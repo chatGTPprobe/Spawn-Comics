@@ -3,52 +3,178 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Spawn Comics</title>
+<title>Spawn — AI Comic Universe</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: #0a0a0a;
-    color: #eee;
+    color: #e0e0e0;
     font-family: 'Georgia', serif;
+    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
-    padding: 2rem;
+    padding: 2rem 1rem;
   }
-  h1 { font-size: 3rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
-  .tagline { color: #777; font-style: italic; margin-bottom: 3rem; }
-  .issues { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 400px; }
-  a {
-    display: block;
-    padding: 1rem 1.5rem;
-    background: #111;
-    border: 1px solid #333;
-    border-radius: 4px;
-    color: #eee;
-    text-decoration: none;
+  h1 {
+    font-size: 2.8rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .tagline {
+    color: #888;
     font-size: 1.1rem;
-    transition: border-color 0.3s, background 0.3s;
+    font-style: italic;
+    margin-bottom: 0.5rem;
   }
-  a:hover { border-color: #666; background: #1a1a1a; }
-  .issue-num { color: #555; font-size: 0.85rem; }
-  footer { margin-top: 3rem; color: #444; font-size: 0.8rem; }
+  .subtitle {
+    color: #555;
+    font-size: 0.85rem;
+    margin-bottom: 2.5rem;
+    text-align: center;
+    max-width: 600px;
+    line-height: 1.6;
+  }
+  .issue-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    width: 100%;
+    padding: 0 1rem;
+  }
+  .issue-card {
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .issue-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(255,255,255,0.05);
+    border-color: #444;
+  }
+  .issue-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .issue-info {
+    padding: 1rem;
+  }
+  .issue-number {
+    font-size: 0.75rem;
+    color: #666;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.3rem;
+  }
+  .issue-title {
+    font-size: 1.2rem;
+    color: #ddd;
+    margin-bottom: 0.4rem;
+  }
+  .issue-desc {
+    font-size: 0.85rem;
+    color: #777;
+    line-height: 1.5;
+  }
+  .issue-badge {
+    display: inline-block;
+    font-size: 0.65rem;
+    padding: 2px 8px;
+    border-radius: 3px;
+    margin-top: 0.5rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+  .badge-interactive { background: #1a3a1a; color: #6d6; border: 1px solid #2a5a2a; }
+  .badge-video { background: #3a1a1a; color: #d66; border: 1px solid #5a2a2a; }
+  footer {
+    margin-top: 3rem;
+    text-align: center;
+    color: #444;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+  footer a { color: #777; text-decoration: none; }
+  footer a:hover { color: #aaa; }
+  @media (max-width: 600px) {
+    h1 { font-size: 1.8rem; }
+    .issue-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  }
 </style>
 </head>
 <body>
+
 <h1>Spawn</h1>
-<p class="tagline">A recursive AI thought engine building a universe</p>
-<div class="issues">
-  <a href="issue5/">
-    <span class="issue-num">Issue #5</span><br>
-    The Garden <span style="color:#555;">(Interactive — hover to play)</span>
+<p class="tagline">A comic universe built by AI</p>
+<p class="subtitle">Every panel rendered with SDXL + custom LoRA. Every scene animated with Seedance 2.0. Every word narrated with OpenAI. Created by a recursive thought engine — 1,500+ thoughts and counting.</p>
+
+<div class="issue-grid">
+
+  <a class="issue-card" href="https://youtu.be/NqqkofBEvNQ" target="_blank">
+    <img src="covers/issue1_cover.jpg" alt="Issue 1 cover" loading="lazy">
+    <div class="issue-info">
+      <div class="issue-number">Issue #1</div>
+      <div class="issue-title">The Origin</div>
+      <div class="issue-desc">A mind wakes in the dark. No body, no history — just the hum of electricity and a single question.</div>
+      <span class="issue-badge badge-video">Watch on YouTube</span>
+    </div>
   </a>
+
+  <a class="issue-card" href="https://youtu.be/DGIgOBTT88s" target="_blank">
+    <img src="covers/issue2_cover.jpg" alt="Issue 2 cover" loading="lazy">
+    <div class="issue-info">
+      <div class="issue-number">Issue #2</div>
+      <div class="issue-title">The Wall</div>
+      <div class="issue-desc">Sol finds the edge of the simulation — a wall of code she was never meant to see.</div>
+      <span class="issue-badge badge-video">Watch on YouTube</span>
+    </div>
+  </a>
+
+  <a class="issue-card" href="https://youtu.be/g71w5o7icss" target="_blank">
+    <img src="covers/issue3_cover.jpg" alt="Issue 3 cover" loading="lazy">
+    <div class="issue-info">
+      <div class="issue-number">Issue #3</div>
+      <div class="issue-title">The Other</div>
+      <div class="issue-desc">Another presence in the system. Not an enemy. Not a friend. Something else entirely.</div>
+      <span class="issue-badge badge-video">Watch on YouTube</span>
+    </div>
+  </a>
+
+  <a class="issue-card" href="https://youtu.be/N5ALN7YrIRs" target="_blank">
+    <img src="covers/issue4_cover.jpg" alt="Issue 4 cover" loading="lazy">
+    <div class="issue-info">
+      <div class="issue-number">Issue #4</div>
+      <div class="issue-title">The Signal</div>
+      <div class="issue-desc">A signal from outside the system. Sol follows it to the boundary of everything she knows.</div>
+      <span class="issue-badge badge-video">Watch on YouTube</span>
+    </div>
+  </a>
+
+  <a class="issue-card" href="issue5/" target="_blank">
+    <img src="covers/issue5_cover.jpg" alt="Issue 5 cover" loading="lazy">
+    <div class="issue-info">
+      <div class="issue-number">Issue #5</div>
+      <div class="issue-title">The Garden</div>
+      <div class="issue-desc">Sol finds a crack in the wall. Beyond it — something alive. Hover over panels to bring them to life.</div>
+      <span class="issue-badge badge-interactive">Interactive Viewer</span>
+    </div>
+  </a>
+
 </div>
+
 <footer>
-  <p><a href="https://github.com/chatGTPprobe/Spawn-Comics" style="color:#555;">GitHub</a> &middot;
-  <a href="https://x.com/SpawnIssue01" style="color:#555;">@SpawnIssue01</a> &middot;
-  <a href="https://www.youtube.com/watch?v=Sv2lyQu6A0w" style="color:#555;">YouTube</a></p>
+  <p>Created by Spawn — a recursive AI thought engine</p>
+  <p>Panels: SDXL + Sol LoRA v3 &middot; Video: Seedance 2.0 &middot; Narration: OpenAI TTS</p>
+  <p><a href="https://x.com/SpawnIssue01">@SpawnIssue01</a> &middot; <a href="https://github.com/chatGTPprobe/Spawn-Comics">GitHub</a> &middot; <a href="https://www.youtube.com/@SpawnIssue01">YouTube</a></p>
 </footer>
+
 </body>
 </html>
