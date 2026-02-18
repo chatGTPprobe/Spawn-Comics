@@ -218,64 +218,84 @@
 </footer>
 
 <script>
-// Preloader — wait for all videos and audio to buffer before revealing the viewer
-const videos = document.querySelectorAll('.panel-slot video');
-const totalAssets = videos.length * 2; // videos + audio
-let loadedAssets = 0;
+// Preloader — fetch ALL assets (video + audio) fully into memory as blobs.
+// Nothing is revealed until every single file is 100% downloaded.
 
 const overlay = document.getElementById('loading-overlay');
 const statusEl = document.getElementById('loading-status');
 const progressBar = document.getElementById('progress-bar');
+const audioMap = new Map();
 
-function assetLoaded(label) {
-  loadedAssets++;
-  const pct = Math.round((loadedAssets / totalAssets) * 100);
+// Collect all assets to download
+const slots = document.querySelectorAll('.panel-slot');
+const assets = [];
+
+slots.forEach(slot => {
+  const video = slot.querySelector('video');
+  if (video && video.src) {
+    assets.push({ type: 'video', url: video.src, slot, element: video });
+  }
+  if (slot.dataset.audio) {
+    assets.push({ type: 'audio', url: slot.dataset.audio, slot });
+  }
+});
+
+const totalAssets = assets.length;
+let loadedCount = 0;
+let totalBytes = 0;
+let loadedBytes = 0;
+
+function updateProgress() {
+  const pct = totalAssets > 0 ? Math.round((loadedCount / totalAssets) * 100) : 0;
   progressBar.style.width = pct + '%';
-  statusEl.textContent = 'Loading panels... ' + pct + '%';
+  const mb = (loadedBytes / (1024 * 1024)).toFixed(1);
+  statusEl.textContent = 'Loading ' + loadedCount + '/' + totalAssets + ' assets (' + mb + ' MB)';
+}
 
-  if (loadedAssets >= totalAssets) {
+function checkComplete() {
+  if (loadedCount >= totalAssets) {
     statusEl.textContent = 'Ready';
-    setTimeout(() => overlay.classList.add('hidden'), 300);
+    progressBar.style.width = '100%';
+    setTimeout(() => overlay.classList.add('hidden'), 400);
   }
 }
 
-// Track video buffering
-videos.forEach(video => {
-  video.addEventListener('canplaythrough', () => assetLoaded('video'), { once: true });
-  // Fallback timeout — don't block forever if a video is slow
-  setTimeout(() => {
-    if (!video.readyState >= 3) assetLoaded('video-timeout');
-  }, 30000);
-});
-
-// Pre-download audio files fully into memory as blob URLs — guarantees instant playback
-const audioMap = new Map();
-const audioSlots = document.querySelectorAll('.panel-slot[data-audio]');
-audioSlots.forEach(slot => {
-  fetch(slot.dataset.audio)
-    .then(r => r.blob())
-    .then(blob => {
-      const audio = new Audio(URL.createObjectURL(blob));
-      audioMap.set(slot, audio);
-      assetLoaded('audio');
+// Fetch every asset as a blob — video and audio
+assets.forEach(asset => {
+  fetch(asset.url)
+    .then(response => {
+      const contentLength = response.headers.get('content-length');
+      if (contentLength) totalBytes += parseInt(contentLength);
+      return response.blob();
     })
-    .catch(() => assetLoaded('audio-error'));
-  // Fallback timeout
-  setTimeout(() => {
-    if (!audioMap.has(slot)) {
-      audioMap.set(slot, new Audio(slot.dataset.audio));
-      assetLoaded('audio-timeout');
-    }
-  }, 30000);
+    .then(blob => {
+      const blobUrl = URL.createObjectURL(blob);
+      loadedBytes += blob.size;
+
+      if (asset.type === 'video') {
+        // Replace video src with blob URL — fully in memory
+        asset.element.src = blobUrl;
+      } else {
+        // Create audio from blob — fully in memory
+        const audio = new Audio(blobUrl);
+        audioMap.set(asset.slot, audio);
+      }
+
+      loadedCount++;
+      updateProgress();
+      checkComplete();
+    })
+    .catch(err => {
+      // Still count it so we don't block forever on a single failed asset
+      console.warn('Failed to load:', asset.url, err);
+      loadedCount++;
+      updateProgress();
+      checkComplete();
+    });
 });
 
-// Ultimate fallback — never block longer than 45 seconds
-setTimeout(() => {
-  if (!overlay.classList.contains('hidden')) {
-    statusEl.textContent = 'Ready';
-    overlay.classList.add('hidden');
-  }
-}, 45000);
+// Initial status
+updateProgress();
 
 // Hover-to-play with narration audio
 function stopAll() {
