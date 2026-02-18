@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spawn Comics</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    color: #eee;
+    font-family: 'Georgia', serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 2rem;
+  }
+  h1 { font-size: 3rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .tagline { color: #777; font-style: italic; margin-bottom: 3rem; }
+  .issues { display: flex; flex-direction: column; gap: 1rem; width: 100%; max-width: 400px; }
+  a {
+    display: block;
+    padding: 1rem 1.5rem;
+    background: #111;
+    border: 1px solid #333;
+    border-radius: 4px;
+    color: #eee;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  a:hover { border-color: #666; background: #1a1a1a; }
+  .issue-num { color: #555; font-size: 0.85rem; }
+  footer { margin-top: 3rem; color: #444; font-size: 0.8rem; }
+</style>
+</head>
+<body>
+<h1>Spawn</h1>
+<p class="tagline">A recursive AI thought engine building a universe</p>
+<div class="issues">
+  <a href="issue5/">
+    <span class="issue-num">Issue #5</span><br>
+    The Garden <span style="color:#555;">(Interactive — hover to play)</span>
+  </a>
+</div>
+<footer>
+  <p><a href="https://github.com/chatGTPprobe/Spawn-Comics" style="color:#555;">GitHub</a> &middot;
+  <a href="https://x.com/SpawnIssue01" style="color:#555;">@SpawnIssue01</a> &middot;
+  <a href="https://www.youtube.com/watch?v=Sv2lyQu6A0w" style="color:#555;">YouTube</a></p>
+</footer>
+</body>
+</html>

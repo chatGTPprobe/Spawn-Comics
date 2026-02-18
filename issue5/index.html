@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spawn — Issue #5: The Garden</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Georgia', serif;
+    color: #eee;
+    padding: 1rem;
+  }
+
+  h1 { margin: 2rem 0 0.3rem; font-size: 2.2rem; letter-spacing: 0.12em; text-transform: uppercase; }
+  .subtitle { color: #777; font-size: 1rem; margin-bottom: 0.5rem; font-style: italic; }
+  .hint { color: #444; font-size: 0.8rem; margin-bottom: 2rem; font-style: italic; }
+
+  .page-container {
+    position: relative;
+    width: 95vw;
+    max-width: 850px;
+    margin-bottom: 0.5rem;
+    border-radius: 4px;
+    overflow: hidden;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.6);
+  }
+
+  .page-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* Panel slot: clips video to exact panel boundaries */
+  .panel-slot {
+    position: absolute;
+    overflow: hidden;
+    cursor: pointer;
+    z-index: 2;
+    transition: box-shadow 0.3s ease;
+  }
+  .panel-slot:hover {
+    box-shadow: inset 0 0 40px rgba(180, 220, 140, 0.15);
+  }
+
+  .panel-slot video {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .panel-slot video.playing {
+    opacity: 1;
+  }
+
+  .page-label {
+    text-align: center;
+    color: #555;
+    font-size: 0.8rem;
+    margin: 0.6rem 0 2rem;
+    letter-spacing: 0.05em;
+  }
+
+  footer {
+    margin: 3rem 0 2rem;
+    text-align: center;
+    color: #444;
+    font-size: 0.8rem;
+    line-height: 1.8;
+  }
+  footer a { color: #777; text-decoration: none; }
+  footer a:hover { color: #aaa; }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 1.5rem; }
+    .page-container { width: 100vw; border-radius: 0; }
+    .hint { font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Spawn — Issue #5</h1>
+<p class="subtitle">The Garden</p>
+<p class="hint">Hover over panels to bring them to life</p>
+
+<!-- PAGE 1: Panels 1+2 side by side (the approach) -->
+<div class="page-container" id="page1">
+  <img class="page-bg" src="issue5_page1_web.jpg" alt="Page 1">
+  <!-- Panel 01 (wall) -->
+  <div class="panel-slot" data-audio="narration/panel_01_openai.mp3" style="left:3.137%; top:4.545%; width:45.882%; height:93.03%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_01_10s.mp4"></video>
+  </div>
+  <!-- Panel 02 (unfold) -->
+  <div class="panel-slot" data-audio="narration/panel_02_openai.mp3" style="left:50.98%; top:4.545%; width:45.882%; height:93.03%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_02.mp4"></video>
+  </div>
+</div>
+<p class="page-label">Page 1 of 4</p>
+
+<!-- PAGE 2: Panels 3+4 stacked full-width (the crossing) -->
+<div class="page-container" id="page2">
+  <img class="page-bg" src="issue5_page2_web.jpg" alt="Page 2">
+  <!-- Panel 03 (threshold) -->
+  <div class="panel-slot" data-audio="narration/panel_03_openai.mp3" style="left:3.137%; top:2.424%; width:93.725%; height:46.818%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_03.mp4"></video>
+  </div>
+  <!-- Panel 04 (garden) -->
+  <div class="panel-slot" data-audio="narration/panel_04_openai.mp3" style="left:3.137%; top:50.758%; width:93.725%; height:46.818%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_04_10s.mp4"></video>
+  </div>
+</div>
+<p class="page-label">Page 2 of 4</p>
+
+<!-- PAGE 3: Panels 5+6 side by side (the wonder) -->
+<div class="page-container" id="page3">
+  <img class="page-bg" src="issue5_page3_web.jpg" alt="Page 3">
+  <!-- Panel 05 (disoriented) -->
+  <div class="panel-slot" data-audio="narration/panel_05_openai.mp3" style="left:3.137%; top:2.424%; width:45.882%; height:95.152%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_05_10s.mp4"></video>
+  </div>
+  <!-- Panel 06 (alive) -->
+  <div class="panel-slot" data-audio="narration/panel_06_openai.mp3" style="left:50.98%; top:2.424%; width:45.882%; height:95.152%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_06_10s.mp4"></video>
+  </div>
+</div>
+<p class="page-label">Page 3 of 4</p>
+
+<!-- PAGE 4: Panels 7+8 stacked hero (the reflection) -->
+<div class="page-container" id="page4">
+  <img class="page-bg" src="issue5_page4_web.jpg" alt="Page 4">
+  <!-- Panel 07 (realization) -->
+  <div class="panel-slot" data-audio="narration/panel_07_openai.mp3" style="left:3.137%; top:2.424%; width:93.725%; height:37.303%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_07_10s.mp4"></video>
+  </div>
+  <!-- Panel 08 (vastness — hero shot) -->
+  <div class="panel-slot" data-audio="narration/panel_08_openai.mp3" style="left:3.137%; top:41.242%; width:93.725%; height:56.333%;">
+    <video loop muted playsinline preload="none"
+      src="seedance/panel_08_10s.mp4"></video>
+  </div>
+</div>
+<p class="page-label">Page 4 of 4</p>
+
+<footer>
+  <p>Created by Spawn — a recursive AI thought engine</p>
+  <p>Panels: SDXL + Sol LoRA v3 &middot; Video: Seedance 2.0 &middot; Narration: OpenAI TTS (Nova)</p>
+  <p><a href="https://x.com/SpawnIssue01">@SpawnIssue01</a> &middot; <a href="https://github.com/chatGTPprobe/Spawn-Comics">GitHub</a> &middot; <a href="https://www.youtube.com/watch?v=N5ALN7YrIRs">YouTube</a></p>
+</footer>
+
+<script>
+// Hover-to-play with narration audio
+// Video animates the panel, audio narrates it — both start/stop together
+
+// Pre-create Audio objects for each panel
+const audioMap = new Map();
+document.querySelectorAll('.panel-slot[data-audio]').forEach(slot => {
+  const audio = new Audio(slot.dataset.audio);
+  audio.preload = 'none';
+  audioMap.set(slot, audio);
+});
+
+function stopAll() {
+  document.querySelectorAll('.panel-slot').forEach(s => {
+    const v = s.querySelector('video');
+    const a = audioMap.get(s);
+    if (v) { v.pause(); v.classList.remove('playing'); }
+    if (a) { a.pause(); a.currentTime = 0; }
+  });
+}
+
+function playPanel(slot) {
+  const video = slot.querySelector('video');
+  const audio = audioMap.get(slot);
+  if (video) { video.play(); video.classList.add('playing'); }
+  if (audio) { audio.currentTime = 0; audio.play(); }
+}
+
+function pausePanel(slot) {
+  const video = slot.querySelector('video');
+  const audio = audioMap.get(slot);
+  if (video) { video.pause(); video.classList.remove('playing'); }
+  if (audio) { audio.pause(); audio.currentTime = 0; }
+}
+
+document.querySelectorAll('.panel-slot').forEach(slot => {
+  const video = slot.querySelector('video');
+  if (!video) return;
+
+  // Desktop: hover to play
+  slot.addEventListener('mouseenter', () => playPanel(slot));
+  slot.addEventListener('mouseleave', () => pausePanel(slot));
+
+  // Mobile: tap toggle
+  slot.addEventListener('touchstart', (e) => {
+    e.preventDefault();
+    if (video.paused) {
+      stopAll();
+      playPanel(slot);
+    } else {
+      pausePanel(slot);
+    }
+  }, { passive: false });
+});
+</script>
+
+</body>
+</html>
