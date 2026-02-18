@@ -248,18 +248,25 @@ videos.forEach(video => {
   }, 30000);
 });
 
-// Pre-create Audio objects and track their loading
+// Pre-download audio files fully into memory as blob URLs — guarantees instant playback
 const audioMap = new Map();
-document.querySelectorAll('.panel-slot[data-audio]').forEach(slot => {
-  const audio = new Audio();
-  audio.preload = 'auto';
-  audio.addEventListener('canplaythrough', () => assetLoaded('audio'), { once: true });
-  // Fallback timeout for audio
+const audioSlots = document.querySelectorAll('.panel-slot[data-audio]');
+audioSlots.forEach(slot => {
+  fetch(slot.dataset.audio)
+    .then(r => r.blob())
+    .then(blob => {
+      const audio = new Audio(URL.createObjectURL(blob));
+      audioMap.set(slot, audio);
+      assetLoaded('audio');
+    })
+    .catch(() => assetLoaded('audio-error'));
+  // Fallback timeout
   setTimeout(() => {
-    if (audio.readyState < 3) assetLoaded('audio-timeout');
+    if (!audioMap.has(slot)) {
+      audioMap.set(slot, new Audio(slot.dataset.audio));
+      assetLoaded('audio-timeout');
+    }
   }, 30000);
-  audio.src = slot.dataset.audio;
-  audioMap.set(slot, audio);
 });
 
 // Ultimate fallback — never block longer than 45 seconds
